@@ -1,12 +1,17 @@
 #ifndef __BASE_H__
 #define __BASE_H__
 
+#include <string>
 using namespace std;
 
 class Base{
-  public:
-    //virtual exec that executes leaf/compostite node in the tree
-    virtual void exec(string cmd = " ") = 0;
+    public:
+
+        //pure virtual exec that executes leaf/compostite node in the tree
+        virtual void exec(string cmd) = 0;
+    
+        //pure virtual function to get the string that the user enters
+        virtual string get_string() = 0;
 
 };
 
