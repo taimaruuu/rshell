@@ -6,7 +6,7 @@
 
 Exit::Exit() {}
 
-void Exit::exec(string cmd) {
+bool Exit::exec(string cmd) {
     exit(0);
 }
 

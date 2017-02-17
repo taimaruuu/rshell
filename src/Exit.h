@@ -10,7 +10,7 @@ class Exit: public Command {
         Exit();
         
         //execute function
-        void exec(string cmd);
+        bool exec(string cmd);
 
         string get_string();
 

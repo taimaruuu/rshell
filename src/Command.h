@@ -16,7 +16,7 @@ class Command: public Base{
         Command();
 
         //exec that executes leaf/compostite node in the tree
-        void exec(string cmd);
+        bool exec(string cmd);
         
         //gets the string/char* of the cmd
         string get_string();

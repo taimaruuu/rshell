@@ -12,7 +12,7 @@ class Connector: public Base{
     public:
 
         //virtual exec that executes leaf/compostite node in the tree
-        void exec(string cmd);
+        bool exec(string cmd);
     
         //function to get string from user
         string get_string();
