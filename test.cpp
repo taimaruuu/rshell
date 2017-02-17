@@ -96,7 +96,7 @@ void populateVectors(string &s){
 
     //cout << "s: " << s << endl;
 
-  getConnectors(s);
+  populateVectors(s);
 }
 //cleans parsed commands in vector
 void cleanCmds(vector<string> &v){
@@ -112,7 +112,7 @@ int main(int argc, char**argv){
 
 
 
-    char input[1000] = "cat unrealfilename#; echo testing cat on invalid file";
+    char input[1000] = "pwd";
     string inputString = string(input);
     removeComment(inputString);
     //char *newString[1000] = inputString;
