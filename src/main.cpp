@@ -15,7 +15,8 @@ int main(int argc, char**argv) {
     char hostName[1000];
     gethostname(hostName, sizeof hostName); //Grab the machine name
 
-    cout << userName << "@" <<  hostName << "$ ";                           //Prints the bash $
+    //Prints the bash $
+    cout << userName << "@" <<  hostName << "$ ";                          
     //End of login info
     return 0;
   }

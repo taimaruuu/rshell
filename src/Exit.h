@@ -13,3 +13,5 @@ class Exit: public Command {
         void exec(string cmd);
 
         string get_string();
+
+}
