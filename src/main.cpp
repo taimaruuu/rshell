@@ -1,5 +1,7 @@
 #include <unistd.h>
 #include <iostream>
+#include "Command.h"
+#include "Base.h"
 
 using namespace std;
 int main(int argc, char**argv) {
@@ -8,9 +10,9 @@ int main(int argc, char**argv) {
   for (; ; ) {
 
     char *userName = getlogin();            //User's name
-    if(!userName) {
-        perror("getlogin()");         //Throws error if cannot find it.
-
+    if(!userName){
+        perror("getlogin()");               //Throws error if cannot find it.
+      }
     char hostName[1000];
     gethostname(hostName, sizeof hostName); //Machine name
 
@@ -18,8 +20,13 @@ int main(int argc, char**argv) {
     cout << userName << "@" <<  hostName << "$ ";
     //End of login info
 
-
+    //Comman testing
+    char command[] = "date";
+    Command *test = new Command(command);
+    cout << test->get_string() << endl;
+    test->exec();
     return 0;
+
   }
 
 }

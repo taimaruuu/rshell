@@ -6,10 +6,13 @@
 
 Exit::Exit() {}
 
-bool Exit::exec(string cmd) {
+bool Exit::exec() {
     exit(0);
 }
 
 string Exit::get_string() {
     return "Exit";
 }
+
+
+#endif
