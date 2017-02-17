@@ -11,4 +11,3 @@ Connector::Connector(Base* lhs, Base* rhs) {
 string Connector::get_string() {
     return "cannot get command string of a connector";
 }
-
