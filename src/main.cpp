@@ -6,9 +6,10 @@
 #include<boost/algorithm/string/trim.hpp>
 #include <string.h>
 #include <stdio.h>
+
 #include "Command.h"
 #include "Base.h"
-
+#include "Exit.h"
 
 using namespace std;
 
@@ -51,6 +52,8 @@ void removeComment(string& s){
 
 //this function populates both global vectors of cmds and connectors
 void populateVectors(string &s, vector<string> &cmdsList, vector<string> &connectorList){
+    if(s.size() == 0)
+      return;
   //for(int i = 0; i < s.size(); i++){
     int orLocation = s.find("||");
     int andLocation = s.find("&&");
@@ -120,17 +123,17 @@ int main(int argc, char**argv) {
   vector<string> cmdsList;
   vector<string> connectorList;
 
+  char *userName = getlogin();         //User's name
+  if(!userName){
+      perror("getlogin()");            //Throws error if cannot find it.
+    }
+  char hostName[1000];
+  gethostname(hostName, sizeof hostName); //Machine name
 
   //loop for the shell
   //exits with exit command
   for (; ; ) {
 
-    char *userName = getlogin();            //User's name
-    if(!userName){
-        perror("getlogin()");               //Throws error if cannot find it.
-      }
-    char hostName[1000];
-    gethostname(hostName, sizeof hostName); //Machine name
 
     //Prints the bash $
     cout << userName << "@" <<  hostName << "$ ";
@@ -146,9 +149,22 @@ int main(int argc, char**argv) {
     getline(cin, userInput);
     removeComment(userInput);
 
-    if(userInput == "exit"){
-      //TODO: exit shit
+    // converts user input to cstring
+    char *cstr = new char[userInput.length() + 1];
+    strcpy(cstr, userInput.c_str());
+
+    if(userInput == "exit"){  //if user enters exit as first command
+      Exit *exit = new Exit();    // create a new object of type exit
+      exit->exec();           // execute the break command
+      //break;                  //break the for loop to exit rShell
     }
+
+    if (userInput.size() == 0) {
+
+    }
+
+    Command *userCommand = new Command(cstr);
+    userCommand->exec();
 
     populateVectors(userInput, cmdsList, connectorList);
     cout << cmdsList.size() << endl;
@@ -157,14 +173,9 @@ int main(int argc, char**argv) {
     for(int i = 0; i < cmdsList.size(); i++){
       cout << cmdsList.at(i) << endl;
     }
-
-
-
-
-
-
-    return 0;
+    cmdsList.clear();
 
   }
+  return 0;
 
 }
