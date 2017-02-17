@@ -1,7 +1,7 @@
+#include <boost/algorithm/string/trim.hpp>
 #include <cstring>
 #include <iostream>
 #include <vector>
-#include<boost/algorithm/string/trim.hpp>
 #include <string.h>
 #include <stdio.h>
 using namespace std;
@@ -17,12 +17,12 @@ void getConnectors(string &s){
 
 void removeComment(char* s){
   bool comment = false;
-  //for(int i = 0; i < s.size() && !comment; i++){
-    //if(s.at(i) == '#'){
-      //s = s.substr(0, i);
-      //comment = true;
-   // }
- // }
+  for(int i = 0; i < strlen(s) && !comment; i++){
+    if(s.at(i) == '#'){
+      s = s.substr(0, i);
+      comment = true;
+    }
+  }
 }
 
 
@@ -66,15 +66,15 @@ int main(int argc, char**argv){
         token = strtok( NULL, " ");
 
       }
-    cout << "Vector Cmds output: " << endl;
-    for(int i = 0; i < cmdsList.size(); i++){
-      cout << cmdsList.at(i) << endl;
-    }
+    //cout << "Vector Cmds output: " << endl;
+    //for(int i = 0; i < cmdsList.size(); i++){
+    //  cout << cmdsList.at(i) << endl;
+    //}
 
-    cout << "Vector Connectors output: " << endl;
-    for(int i = 0; i < connectorList.size(); i++){
-      cout << connectorList.at(i) << endl;
-    }
+    //cout << "Vector Connectors output: " << endl;
+    //for(int i = 0; i < connectorList.size(); i++){
+    //  cout << connectorList.at(i) << endl;
+    //}
 
     return 0;
   }
