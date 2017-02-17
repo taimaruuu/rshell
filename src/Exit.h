@@ -14,4 +14,6 @@ class Exit: public Command {
 
         string get_string();
 
-}
+};
+
+#endif
