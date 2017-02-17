@@ -1,3 +1,6 @@
+#ifndef __CONNECTOR_CPP__
+#define __CONNECTOR_CPP__
+
 #include "Connector.h"
 
 Connector::Connector(Base* lhs, Base* rhs) {
@@ -8,4 +11,3 @@ Connector::Connector(Base* lhs, Base* rhs) {
 string Connector::get_string() {
     return "cannot get command string of a connector";
 }
-

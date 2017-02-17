@@ -8,8 +8,8 @@ class Base{
     public:
 
         //pure virtual exec that executes leaf/compostite node in the tree
-        virtual void exec(string cmd) = 0;
-    
+        virtual bool exec() = 0;
+
         //pure virtual function to get the string that the user enters
         virtual string get_string() = 0;
 

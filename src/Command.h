@@ -7,16 +7,19 @@
 class Command: public Base{
     protected:
 
-        char* cmd; //array of command you want to implement 
+        char* cmd; //array of command you want to implement
 
     public:
-    
+
         // constructor
         Command(char* command);
         Command();
 
         //exec that executes leaf/compostite node in the tree
-        void exec(string cmd);
+        bool exec();
+
+        //gets the string/char* of the cmd
+        string get_string();
 
 };
 
