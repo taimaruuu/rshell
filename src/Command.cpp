@@ -24,19 +24,20 @@
     }
 
     //exec that executes leaf/compostite node in the tree
-    bool Command::exec() {
+    bool Command::exec(vector<string> argsList) {
         //set the args at 0 (so the first one) = to this->command
         char *args[420];
-        args[0] = this->cmd;
+        args[0] = (char*)argsList.at(0).c_str();
         //args[cmdLength(this->cmd) + 1] = "\0";
         vector<string> tempargs;
         string temp = "";
         tempargs.push_back(temp);
         unsigned x;
-        //for(x = 0; x < tempargs.size(); x++) {
-          //args[2] = (char*)temp.c_str();
-          args[1] = 0;
-        //}
+        for(x = 1; x < argsList.size(); x++) {
+          cout << "temp: " << argsList.at(x) << endl;
+          args[x] = (char*)argsList.at(x).c_str();
+        }
+        args[x] = 0;
 
 
 

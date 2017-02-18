@@ -10,6 +10,7 @@
 #include "Command.h"
 #include "Base.h"
 #include "Exit.h"
+#include "parse.h"
 
 using namespace std;
 
@@ -40,15 +41,6 @@ int determineSmallest(int a, int b, int c){
 }
 
 //this function removes the comment from the input
-void removeComment(string& s){
-  bool comment = false;
-  for(int i = 0; i < s.size() && !comment; i++){
-    if(s.at(i) == '#'){
-      s = s.substr(0, i);
-      comment = true;
-    }
-  }
-}
 
 //this function populates both global vectors of cmds and connectors
 void populateVectors(string &s, vector<string> &cmdsList, vector<string> &connectorList){
@@ -123,6 +115,8 @@ int main(int argc, char**argv) {
   vector<string> cmdsList;
   vector<string> connectorList;
 
+
+
   char *userName = getlogin();         //User's name
   if(!userName){
       perror("getlogin()");            //Throws error if cannot find it.
@@ -133,8 +127,7 @@ int main(int argc, char**argv) {
   //loop for the shell
   //exits with exit command
   for (; ; ) {
-
-
+    vector<string> argsList;
     //Prints the bash $
     cout << userName << "@" <<  hostName << "$ ";
     //End of login info
@@ -147,8 +140,8 @@ int main(int argc, char**argv) {
 
     string userInput;
     getline(cin, userInput);
-    parse(userInput);
-    removeComment(userInput);
+    parse(userInput, argsList);
+    //removeComment(userInput);
 
     cout << "This shit sucks: " << userInput << endl;
     // converts user input to cstring
@@ -166,7 +159,7 @@ int main(int argc, char**argv) {
     }
 
     Command *userCommand = new Command(cstr);
-    userCommand->exec();
+    userCommand->exec(argsList);
 
     populateVectors(userInput, cmdsList, connectorList);
     cout << cmdsList.size() << endl;
