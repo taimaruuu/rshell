@@ -1,3 +1,3 @@
 rshell:
 	-mkdir -p bin
-	g++ -Wall -Werror -ansi -pedantic -ot bin/rshell src/*.cpp
+	g++ -Wall -Werror -ansi -pedantic -o bin/rshell src/*.cpp
