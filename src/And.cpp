@@ -2,11 +2,10 @@
 
 And::And(Base* lhs, Base* rhs): Connector(lhs,rhs) {}
 
-// wouldn't "rhs/lhs->exec(cmd)" end up doing the same command?
-// Executes left command only if the right command successfully executes.
+// Executes right command only if the left command successfully executes.
 bool And::exec() {
-    if(rhs->exec()) {
-        if(lhs->exec()) {
+    if(lhs->exec()) {
+        if(rhs->exec()) {
             return true;
         }
         else {

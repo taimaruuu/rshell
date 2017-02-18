@@ -24,6 +24,8 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
       }
       if(cast.at(0) == "&"){
         commandOnly = false;
+        it++;
+        it++;
         ret = new And(new Command(arglist),tokeParse(token,it));
       }
       if(cast.at(0) == "|"){
@@ -62,6 +64,8 @@ Base* parse(string &input){
       }
       if(cast.at(0) == "&"){
         commandOnly = false;
+        it++;
+        it++;
         ret = new And(new Command(arglist),tokeParse(token,it));
       }
       if(cast.at(0) == "|"){

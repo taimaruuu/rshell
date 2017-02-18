@@ -12,10 +12,10 @@
 
     Command::Command(vector<string> argsList): argsList(argsList) {}
 
-    int cmdLength(char* command){
-      cout << strlen(command) << endl;
-      return strlen(command);
-    }
+    // int cmdLength(char* command){
+    //   cout << strlen(command) << endl;
+    //   return strlen(command);
+    // }
 
     //exec that executes leaf/compostite node in the tree
     bool Command::exec() {
