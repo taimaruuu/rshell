@@ -1,14 +1,14 @@
 #ifndef _AND_H_
 #define _AND_H_
 
-using namespace std;
+#include "Connector.h"
 
-class And: public Connector {
+class And: public Connector{
     public:
 
         And(Base* lhs, Base* rhs);
 
-        bool exec(string cmd);
+        bool exec( );
 };
 
 #endif

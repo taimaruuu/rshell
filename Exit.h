@@ -12,7 +12,6 @@ class Exit: public Command {
         //execute function
         bool exec();
 
-        string get_string();
 
 };
 

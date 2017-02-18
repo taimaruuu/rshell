@@ -7,19 +7,16 @@
 class Command: public Base{
     protected:
 
-        char* cmd; //array of command you want to implement
+        vector<string> argsList; //array of command you want to implement
 
     public:
 
         // constructor
-        Command(char* command);
+        Command(vector<string> argsList);
         Command();
 
         //exec that executes leaf/compostite node in the tree
-        bool exec(vector<string> args);
-
-        //gets the string/char* of the cmd
-        string get_string();
+        bool exec( );
 
 };
 

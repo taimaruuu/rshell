@@ -1,6 +1,3 @@
-#ifndef __COMMAND_CPP__
-#define __COMMAND_CPP__
-
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/types.h>
@@ -12,11 +9,8 @@
 #include "Command.h"
 
     // constructor
-    Command::Command(char* command) {
-        this->cmd = command;
-    }
 
-    Command::Command() {}
+    Command::Command(vector<string> argsList): argsList(argsList) {}
 
     int cmdLength(char* command){
       cout << strlen(command) << endl;
@@ -24,7 +18,11 @@
     }
 
     //exec that executes leaf/compostite node in the tree
-    bool Command::exec(vector<string> argsList) {
+    bool Command::exec() {
+
+        if(argsList.at(0) == "exit"){
+          exit(0);
+        }
         //set the args at 0 (so the first one) = to this->command
         char *args[420];
         args[0] = (char*)argsList.at(0).c_str();
@@ -38,7 +36,6 @@
           args[x] = (char*)argsList.at(x).c_str();
         }
         args[x] = 0;
-
 
 
 
@@ -70,12 +67,3 @@
 
         return ret_status;
     }
-
-    //gets the string/char* of the cmd
-    string Command::get_string() {
-        return cmd;
-    }
-
-
-
-#endif

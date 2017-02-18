@@ -9,8 +9,12 @@
 
 #include "Command.h"
 #include "Base.h"
-#include "Exit.h"
 #include "parse.h"
+#include "Connector.h"
+#include "And.h"
+#include "Or.h"
+#include "Semicolon.h"
+
 
 using namespace std;
 
@@ -140,7 +144,7 @@ int main(int argc, char**argv) {
 
     string userInput;
     getline(cin, userInput);
-    parse(userInput, argsList);
+    Base* toExec = parse(userInput);
     //removeComment(userInput);
 
     cout << "This shit sucks: " << userInput << endl;
@@ -149,8 +153,8 @@ int main(int argc, char**argv) {
     strcpy(cstr, userInput.c_str());
 
     if(userInput == "exit"){  //if user enters exit as first command
-      Exit *exit = new Exit();    // create a new object of type exit
-      exit->exec();           // execute the break command
+      exit(0);
+      // execute the break command
       //break;                  //break the for loop to exit rShell
     }
 
@@ -158,8 +162,10 @@ int main(int argc, char**argv) {
 
     }
 
-    Command *userCommand = new Command(cstr);
-    userCommand->exec(argsList);
+    //exec base*
+    toExec->exec();
+    //Command *userCommand = new Command(cstr);
+    //userCommand->exec(argsList);
 
     populateVectors(userInput, cmdsList, connectorList);
     cout << cmdsList.size() << endl;
