@@ -51,13 +51,16 @@ void populateVectors(string &s, vector<string> &cmdsList, vector<string> &connec
     int andLocation = s.find("&&");
     int semiLocation = s.find(";");
     if(orLocation == string::npos){
-      orLocation = 99999999; // set to large number to ensure it wil never be the smallest
+      orLocation = 99999999; 
+      // set to large number to ensure it wil never be the smallest
     }
     if(andLocation == string::npos){
-      andLocation = 99999999; // set to large number to ensure it wil never be the smallest
+      andLocation = 99999999; 
+      // set to large number to ensure it wil never be the smallest
     }
     if(semiLocation == string::npos){
-      semiLocation = 99999999; // set to large number to ensure it wil never be the smallest
+      semiLocation = 99999999; 
+      // set to large number to ensure it wil never be the smallest
     }
     int closestLocation = determineSmallest(orLocation, andLocation, semiLocation);
     if(closestLocation == 99999999){
