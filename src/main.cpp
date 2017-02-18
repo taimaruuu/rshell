@@ -43,7 +43,7 @@ using namespace std;
 //   else
 //     return a;
 // }
-// 
+//
 // //this function removes the comment from the input
 //
 // //this function populates both global vectors of cmds and connectors
@@ -167,13 +167,13 @@ int main(int argc, char**argv) {
     //Command *userCommand = new Command(cstr);
     //userCommand->exec(argsList);
 
-    populateVectors(userInput, cmdsList, connectorList);
-    cout << cmdsList.size() << endl;
-    cleanCmds(cmdsList);
+    //populateVectors(userInput, cmdsList, connectorList);
+    //cout << cmdsList.size() << endl;
+    //cleanCmds(cmdsList);
 
-    for(int i = 0; i < cmdsList.size(); i++){
-      cout << cmdsList.at(i) << endl;
-    }
+    // for(int i = 0; i < cmdsList.size(); i++){
+    //   cout << cmdsList.at(i) << endl;
+    // }
     cmdsList.clear();
 
   }
