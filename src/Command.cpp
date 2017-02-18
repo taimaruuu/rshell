@@ -32,7 +32,7 @@
         tempargs.push_back(temp);
         unsigned x;
         for(x = 1; x < argsList.size(); x++) {
-          cout << "temp: " << argsList.at(x) << endl;
+          //cout << "temp: " << argsList.at(x) << endl;
           args[x] = (char*)argsList.at(x).c_str();
         }
         args[x] = 0;

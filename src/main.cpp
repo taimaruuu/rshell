@@ -147,7 +147,6 @@ int main(int argc, char**argv) {
     Base* toExec = parse(userInput);
     //removeComment(userInput);
 
-    cout << "This shit sucks: " << userInput << endl;
     // converts user input to cstring
     char *cstr = new char[userInput.length() + 1];
     strcpy(cstr, userInput.c_str());
