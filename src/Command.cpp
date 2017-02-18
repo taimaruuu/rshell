@@ -4,6 +4,9 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/types.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
 
 
 #include "Command.h"
@@ -15,32 +18,50 @@
 
     Command::Command() {}
 
+    int cmdLength(char* command){
+      cout << strlen(command) << endl;
+      return strlen(command);
+    }
+
     //exec that executes leaf/compostite node in the tree
-    bool Command::exec() {
+    bool Command::exec(vector<string> argsList) {
         //set the args at 0 (so the first one) = to this->command
         char *args[420];
-        // args[419] = NULL;
-        args[0] = this->cmd;
+        args[0] = (char*)argsList.at(0).c_str();
+        //args[cmdLength(this->cmd) + 1] = "\0";
+        vector<string> tempargs;
+        string temp = "";
+        tempargs.push_back(temp);
+        unsigned x;
+        for(x = 1; x < argsList.size(); x++) {
+          cout << "temp: " << argsList.at(x) << endl;
+          args[x] = (char*)argsList.at(x).c_str();
+        }
+        args[x] = 0;
 
-        bool ret_status; //return value to see if the function executed or not
+
+
+
+        //return value to see if the function executed or not
+        bool ret_status = true;
 
         pid_t pid = fork(); //creates child process using fork()
 
         if(pid == -1) { //forking failed use perror
-            perror("fork");
+            perror("fork failed");
         }
-        else if (pid == 0) { // pid == 0 is child process
-          if(execvp(args[0], args) == -1){
-            perror("execvp");
+        if (pid == 0) { // pid == 0 is child process
+          if(execvp(args[0], args) == -1) {
             ret_status = false;
-            _exit(1);
+            perror("execvp failed");
+            exit(1);
           }
         }
-        else if(pid > 0){ // pid > 0 is parent process
+        if(pid > 0){ // pid > 0 is parent process
           int status;     // used for exit status value of child
           int option = 0;  // not needed
           if (waitpid(pid, &status, option) == -1){
-            perror("wait");
+            perror("wait failed");
           }
           if(WEXITSTATUS(status) != 0) {
             ret_status = false;

@@ -1,8 +1,8 @@
-#ifndef _EXIT_H_
-#define _EXIT_H_
+#ifndef __EXIT_CPP__
+#define __EXIT_CPP__
 
 #include "Exit.h"
-#include "Command.cpp"
+#include <stdlib.h>
 
 Exit::Exit() {}
 
