@@ -1,0 +1,7 @@
+rshell:
+	-mkdir -p bin
+<<<<<<< HEAD
+	g++ -std=c+98vim -Wall -Werror -ansi -pedantic -o bin/rshell src/*.cpp
+=======
+	g++ -Wall -Werror -ansi -pedantic -ot bin/rshell src/*.cpp
+>>>>>>> exec
