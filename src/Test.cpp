@@ -2,21 +2,24 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "Test.h"
+#include <iostream>
+#include <string>
+using namespace std;
 
-Test::Test(char* flag, char* path) {
+Test::Test(string flag, string path) {
     this->flag = flag;
     this->path = path;
 }
 
 //if no flag is defined, assume flag is -e
-Test::Test(char* path) {
+Test::Test(string path) {
     this->flag = "-e";
     this->path = path;
 }
 
 bool Test::exec() {
     struct stat buf;
-    int statvalue = stat(this->path, &buf);
+    int statvalue = stat(this->path.c_str(), &buf);
     //if stat value is -1, cannot be -e,-f,-d this must be false
     if(statvalue == -1) {
         cout << "(False)" << endl;

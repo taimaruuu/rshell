@@ -6,12 +6,12 @@ using namespace std;
 
 class Test: public Base {
     protected:
-        char* path;
-        char* flag;
+        string path;
+        string flag;
     public:
         //Constructors
-        Test(char* flag, char* path);
-        Test(char* path);
+        Test(string flag, string path);
+        Test(string path);
 
         //executes the test command, returns true/false
         bool exec( );
