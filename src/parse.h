@@ -13,59 +13,96 @@
 typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
 
 
+
 Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
   //typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
-  it++;
+  if(it != token.end()){
+    it++;
+  }
+
   vector<string> arglist;
   vector<string> cast(1);
-  Base *ret = 0;
+  vector<string> tcast(1);
   bool commandOnly = true;
-    int i = 0;
+  bool flagPresent = false;
+  //cout << "IS THIS THE ERROR" << endl;
+
     while (it != token.end()) {
+
+
       if(it != token.end()){
         cast.at(0) = *it;
+      }
+      if(cast.at(0) == "-"){
+        string tempFlag = cast.at(0);
+        it++;
+        cast.at(0) = *it;
+        string gg = cast.at(0);
+        tempFlag = tempFlag + gg;
+        arglist.push_back(tempFlag);
+        // return new Command(arglist);
+        flagPresent = true;
       }
       if(cast.at(0) == "#"){
         break;
       }
-      if(cast.at(0) == "&"){
-        commandOnly = false;
-        it++;
-        ret = new And(new Command(arglist),tokeParse(token,it));
+      if (boost::next(it) != token.end()){
+        tcast.at(0) = *boost::next(it);
       }
-      if(cast.at(0) == "|"){
+      if(tcast.at(0) == "&"){
         commandOnly = false;
-        it++;
-        ret = new Or(new Command(arglist),tokeParse(token,it));
+        arglist.push_back(cast.at(0));
+        //it;
+        return new Command(arglist);
+        // it++;
+        // ret = new And(new Command(arglist),tokeParse(token,it));
       }
-      if(cast.at(0) == ";"){
+      if(tcast.at(0) == "|"){
         commandOnly = false;
-        return new Semicolon(new Command(arglist),tokeParse(token,it));
+        arglist.push_back(cast.at(0));
+
+        //it;
+        return new Command(arglist);
+        // ret = new Or(new Command(arglist),tokeParse(token,it));
+      }
+      if(tcast.at(0) == ";"){
+        cout << "IS THIS THE ERROR" << endl;
+
+        commandOnly = false;
+        arglist.push_back(cast.at(0));
+        //it;
+        return new Command(arglist);
       }
       // if(cast.at(0) == "[")
-
-      arglist.push_back(cast.at(0));
+      if(flagPresent == false){
+        cout <<  "command form part deux" << cast.at(0) << endl;
+        arglist.push_back(cast.at(0));
+      }
 
       if (it != token.end()) {
         it++;
       }
-      i++;
+
 
     }
 
-    if (commandOnly) {
-      return new Command(arglist);
-    }
-    return ret;
+    // if (commandOnly) {
+    //   return new Command(arglist);
+    // }
+    cout << "IS THIS THE ERROR" << endl;
+
+    return new Command(arglist);;
 }
 
 
 Base* parse(string &input){
   typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
+  Base* head = 0;
   // boost::char_separator<char> sep("\"");
   vector<string> arglist;
   vector<string> cast(1);
-  Base *ret = 0;
+  // Base *ret = 0;
+  bool firstCommand = true;
   bool flagPresent = false;
   bool commandOnly = true;
   tokenizer token(input);
@@ -95,16 +132,32 @@ Base* parse(string &input){
       if(cast.at(0) == "&"){
         commandOnly = false;
         it++;
-        return new And(new Command(arglist),tokeParse(token,it));
+        if (firstCommand) {
+          head = new Command(arglist);
+          firstCommand = false;
+        }
+        Base* temp = new And(head, tokeParse(token,it));
+        head = temp;
       }
       if(cast.at(0) == "|"){
         commandOnly = false;
         it++;
-        return new Or(new Command(arglist),tokeParse(token,it));
+        if (firstCommand) {
+          head = new Command(arglist);
+          firstCommand = false;
+        }
+        Base* temp = new Or(head, tokeParse(token,it));
+        head = temp;
       }
       if(cast.at(0) == ";"){
         commandOnly = false;
-        return new Semicolon(new Command(arglist),tokeParse(token,it));
+        it++;
+        if (firstCommand) {
+          head = new Command(arglist);
+          firstCommand = false;
+        }
+        Base* temp = new Semicolon(head, tokeParse(token,it));
+        head = temp;
       }
 
       if(cast.at(0) == "("){
@@ -113,16 +166,20 @@ Base* parse(string &input){
       if(cast.at(0) == ")"){
 
       }
-      if(flagPresent == false)
+      if(flagPresent == false){
         arglist.push_back(cast.at(0));
-      it++;
+      }
+      if (it != token.end()) {
+          it++;
+      }
+
       i++;
     }
 
     if (commandOnly) {
-      return new Command(arglist);
+      head = new Command(arglist);
     }
-    return ret;
+    return head;
 }
 
 bool preParse(string &input){
