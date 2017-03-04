@@ -104,7 +104,7 @@ Base* parse(string &input){
 	    while(it != token.end()) {
 		if(*it != "]") {
 		    tpath += *it;
-		    }
+	        }
 		    it++;
 	    }
 	    return new Test(temp, tpath);
@@ -113,9 +113,9 @@ Base* parse(string &input){
 	    while(it != token.end()) {
 		if(*it != "]") {		
 		    tpath += *it;
-		    }
+		}
 		    it++;
-	        }
+	        
 	    }	
 	    return new Test(tpath);
 	}
