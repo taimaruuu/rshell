@@ -18,13 +18,13 @@ echo "Expected outcome: (True), (True), (True), (False)"
 echo "Making directory named direc"
 mkdir direc
 echo "Testing no flag, -e, -f, d, on directory"
-echo "Expected outcome: (False), (False), (False), (True)"
+echo "Expected outcome: (True), (True), (False), (True)"
 test direc
 test -e direc
 test -f direc
 test -d direc
 echo "Testing no flag, -e, -f, d, on directory with brackets"
-echo "Expected outcome: (False), (False), (False), (True)"
+echo "Expected outcome: (True), (True), (False), (True)"
 [direc]
 [-e direc]
 [-f direc]
