@@ -5,6 +5,7 @@
 #include "Or.h"
 #include "And.h"
 #include "Semicolon.h"
+#include "Test.h"
 
 #include<boost/tokenizer.hpp>
 
