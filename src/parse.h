@@ -64,6 +64,8 @@ Base* parse(string &input){
   vector<string> arglist;
   vector<string> cast(1);
   Base *ret = 0;
+  string temp = "-";
+  string tpath = "";
   bool commandOnly = true;
   tokenizer token(input);
   tokenizer::iterator it = token.begin();
@@ -92,9 +94,12 @@ Base* parse(string &input){
       if(cast.at(0) == "["){
 	it++;
 	cast.at(0) = *it;
+	
 	if(cast.at(0).at(0) == '-'){
 	    it++;
-	    return new Test(cast.at(0), *it);
+	    temp += *it;
+	    it++;
+	    return new Test(temp, *it);
 	}
 	else{
 	    return new Test(cast.at(0));
@@ -105,7 +110,9 @@ Base* parse(string &input){
 	cast.at(0) = *it;
 	if(cast.at(0).at(0) == '-'){
 	    it++;
-	    return new Test(cast.at(0), *it);
+	    temp += *it;
+            it++;
+	    return new Test(temp, *it);
 	}
 	else{
 	    return new Test(cast.at(0));

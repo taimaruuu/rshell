@@ -21,8 +21,10 @@ bool Test::exec() {
     struct stat buf;
     int statvalue = stat(this->path.c_str(), &buf);
     //if stat value is -1, cannot be -e,-f,-d this must be false
+//cout << flag << ", " << path << endl;
     if(statvalue == -1) {
-        cout << "(False)" << endl;
+	cout << "(False)" << endl;
+//cout << flag << ", " << path << endl;
         return false;
     }
     //since path HAS TO BE a regular file OR a valid directory, if flag is -e ret. true
@@ -32,29 +34,34 @@ bool Test::exec() {
     }
     else if(this->flag == "-f") {
         //if is a regular file, ret. true, else ret. false
-        if(S_ISREG(buf.st_mode) == 0) {
+        if(S_ISREG(buf.st_mode)) {
             cout << "(TRUE)" << endl;
             return true;
         }
         else {
+//cout << flag << ", " << path << endl;
+//cout << "test -f\n";
             cout << "(FALSE)" << endl;
             return false;
         }
     }
     else if(this->flag == "-d") {
         //if is a directory, ret. true, else ret. false
-        if(S_ISDIR(buf.st_mode) == 0) {
+        if(S_ISDIR(buf.st_mode)) {
             cout << "(TRUE)" << endl;
             return true;
         }
         else {
             cout << "(FALSE)" << endl;
+//cout << flag << ", " << path << endl;
+//cout << "test -d\n";
             return false;
         }
     }
     //if it reaches this point, the flag was invalid
     else {
         cout << "Error: invalid flag" << endl;
+//cout << flag << ", " << path << endl;
         return false;
     }
 }
