@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
+<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> Stashed changes
 # rShell
 CS100 command shell called rshell in C++
 
+<<<<<<< Updated upstream
 Clone, make, and run rShell
 ----------------------------
 
@@ -48,3 +54,12 @@ Arav Batra: https://github.com/abatra002
 Taimaru Provensal: https://github.com/taimaruuu
 
 Trevor Kim: https://github.com/tkim057
+=======
+All code writen by Arav is first pushed here
+=======
+##UML Diagram
+>>>>>>> dc3f68cd66e0246302e6b92220a3421f3e79d54a
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
