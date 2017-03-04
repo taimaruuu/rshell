@@ -15,26 +15,26 @@ echo "Expected outcome: (True), (True), (True), (False)"
 [-f text]
 [-d text]
 
-echo "Making directory named sample_dir"
-mkdir sample_dir
+echo "Making directory named direc"
+mkdir direc
 echo "Testing no flag, -e, -f, d, on directory"
 echo "Expected outcome: (False), (False), (False), (True)"
-test sample_dir
-test -e sample_dir
-test -f sample_dir
-test -d sample_dir
+test direc
+test -e direc
+test -f direc
+test -d direc
 echo "Testing no flag, -e, -f, d, on directory with brackets"
 echo "Expected outcome: (False), (False), (False), (True)"
-[sample_dir]
-[-e sample_dir]
-[-f sample_dir]
-[-d sample_dir]
-cd sample_dir
+[direc]
+[-e direc]
+[-f direc]
+[-d direc]
+cd direc
 echo "Making file to test longer paths"
 touch text1
 echo "Testing using brackets and -f flag"
 cd ../
-[-f sample_dir/text1]
+[-f direc/text1]
 echo "Test invalid flag and then invalid path/file"
 test -p text
 [this/is/an/invaild/path]
