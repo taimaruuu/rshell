@@ -30,7 +30,7 @@ Base* precedenceParse(tokenizer &token, tokenizer::iterator &it){
   while (it != token.end()) {
       if(it != token.end()){
         cast.at(0) = *it;
-        cout << "CAST PRECEDEC" << cast.at(0) << endl;
+        // cout << "CAST PRECEDEC" << cast.at(0) << endl;
       }
 
 
@@ -41,6 +41,10 @@ Base* precedenceParse(tokenizer &token, tokenizer::iterator &it){
       }
 
       if(cast.at(0) == ")"){
+        // cout << "ENTERS CLOSE" << endl;
+        // for (unsigned i = 0; i < arglist.size(); i++) {
+        //   cout << arglist.at(i) << endl;
+        // }
         return new Command(arglist);
       }
 
@@ -97,7 +101,7 @@ Base* precedenceParse(tokenizer &token, tokenizer::iterator &it){
         arglist.push_back(cast.at(0));
       }
       if (it != token.end()) {
-          cout << "precedence iter\n";
+          // cout << "precedence iter\n";
           it++;
       }
     }
@@ -123,7 +127,7 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
 
       if(it != token.end()){
         cast.at(0) = *it;
-        cout << "CAST TOKE" << cast.at(0) << endl;
+        // cout << "CAST TOKE" << cast.at(0) << endl;
 
       }
 
@@ -177,7 +181,7 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
       }
 
       if (it != token.end()) {
-        cout << "toke iter\n";
+        // cout << "toke iter\n";
         it++;
       }
     }
@@ -196,6 +200,7 @@ Base* parse(string &input){
   bool firstCommand = true;
   bool flagPresent = false;
   bool commandOnly = true;
+  bool entersPrec = false;
   tokenizer token(input);
   tokenizer::iterator it = token.begin();
 
@@ -203,7 +208,7 @@ Base* parse(string &input){
   while (it != token.end()) {
       if(it != token.end()){
         cast.at(0) = *it;
-        cout << "CAST PARSE" << cast.at(0) << endl;
+        // cout << "CAST PARSE" << cast.at(0) << endl;
 
       }
 
@@ -211,6 +216,7 @@ Base* parse(string &input){
         firstCommand = false;
         Base* precedence = precedenceParse(token, it);
         head = precedence;
+        entersPrec = true;
         // cast.at(0) = *it;
       }
       if(cast.at(0) == ")"){
@@ -307,16 +313,13 @@ Base* parse(string &input){
       //   it++;
       // }
 
-      cout << "Does this iterate?1" << endl;
+      // cout << "Does this iterate?1" << endl;
       if (it != token.end() ) {
-        cout << "Does this iterate?" << endl;
+        // cout << "Does this iterate?" << endl;
           it++;
       }
-
-
-
     }
-    if (commandOnly) {
+    if (commandOnly && !entersPrec) {
       head = new Command(arglist);
     }
     return head;
