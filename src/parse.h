@@ -25,10 +25,9 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
   vector<string> tcast(1);
   bool commandOnly = true;
   bool flagPresent = false;
-  //cout << "IS THIS THE ERROR" << endl;
+
 
     while (it != token.end()) {
-
 
       if(it != token.end()){
         cast.at(0) = *it;
@@ -66,7 +65,7 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
         // ret = new Or(new Command(arglist),tokeParse(token,it));
       }
       if(tcast.at(0) == ";"){
-        cout << "IS THIS THE ERROR" << endl;
+
 
         commandOnly = false;
         arglist.push_back(cast.at(0));
@@ -75,7 +74,7 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
       }
       // if(cast.at(0) == "[")
       if(flagPresent == false){
-        cout <<  "command form part deux" << cast.at(0) << endl;
+
         arglist.push_back(cast.at(0));
       }
 
@@ -107,6 +106,11 @@ Base* parse(string &input){
   bool commandOnly = true;
   tokenizer token(input);
   tokenizer::iterator it = token.begin();
+
+  // for (; it2 != token.end(); it2++) {
+  //   cast.at(0) = *it2;
+  //   cout << cast.at(0) << endl;
+  // }
 
     int i = 0;
     while (it != token.end()) {
@@ -151,20 +155,18 @@ Base* parse(string &input){
       }
       if(cast.at(0) == ";"){
         commandOnly = false;
-        it++;
+        // it++;
         if (firstCommand) {
           head = new Command(arglist);
           firstCommand = false;
         }
-        Base* temp = new Semicolon(head, tokeParse(token,it));
-        head = temp;
-      }
-
-      if(cast.at(0) == "("){
-
-      }
-      if(cast.at(0) == ")"){
-
+        if (boost::next(it) == token.end()) {
+          return head;
+        }
+        else {
+          Base* temp = new Semicolon(head, tokeParse(token,it));
+          head = temp;
+        }
       }
       if(flagPresent == false){
         arglist.push_back(cast.at(0));
