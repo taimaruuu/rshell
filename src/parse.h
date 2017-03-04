@@ -91,31 +91,52 @@ Base* parse(string &input){
         commandOnly = false;
         return new Semicolon(new Command(arglist),tokeParse(token,it));
       }
+      //for test with bracket
       if(cast.at(0) == "["){
 	it++;
 	cast.at(0) = *it;
-	
+	//look for flag
 	if(cast.at(0).at(0) == '-'){
 	    it++;
 	    temp += *it;
+	    //get whole file path if exists
 	    it++;
-	    return new Test(temp, *it);
+	    while(*it != "]" && it != token.end()) {
+		tpath += *it;
+		it++;
+	    }
+	    return new Test(temp, tpath);
 	}
 	else{
-	    return new Test(cast.at(0));
+	    while(*it != "]" && it != token.end()) {
+		tpath += *it;
+		it++;
+	    }
+	    return new Test(tpath);
 	}
       }
+      //for test
       if(cast.at(0) == "test"){
 	it++;
 	cast.at(0) = *it;
+	//look for flag
 	if(cast.at(0).at(0) == '-'){
 	    it++;
 	    temp += *it;
             it++;
-	    return new Test(temp, *it);
+	    //get whole file path if exists
+	    while(it != token.end()) {
+		tpath += *it;
+		it++;
+	    }
+	    return new Test(temp, tpath);
 	}
 	else{
-	    return new Test(cast.at(0));
+	    while(it != token.end()) {
+		tpath += *it;
+		it++;
+	    }
+	    return new Test(tpath);
 	}
       }
       arglist.push_back(cast.at(0));
