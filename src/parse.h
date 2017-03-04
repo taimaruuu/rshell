@@ -88,6 +88,24 @@ Base* parse(string &input){
         commandOnly = false;
         return new Semicolon(new Command(arglist),tokeParse(token,it));
       }
+      if(cast.at(0) == "["){
+	it++;
+	if(cast.at(0).at(0) == "-"){
+	    return new Test(cast.at(0), *it++);
+	}
+	else{
+	    return new Test(cast.at(0));
+	}
+      }
+      if(cast.at(0) == "Test"){
+	it++;
+	if(cast.at(0).at(0) == "-"){
+	    return new Test(cast.at(0), *it++);
+	}
+	else{
+	    return new Test(cast.at(0));
+	}
+      }
       arglist.push_back(cast.at(0));
       it++;
       i++;
