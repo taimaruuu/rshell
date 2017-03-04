@@ -90,8 +90,10 @@ Base* parse(string &input){
       }
       if(cast.at(0) == "["){
 	it++;
-	if(cast.at(0).at(0) == "-"){
-	    return new Test(cast.at(0), *it++);
+	cast.at(0) = *it;
+	if(cast.at(0).at(0) == '-'){
+	    it++;
+	    return new Test(cast.at(0), *it);
 	}
 	else{
 	    return new Test(cast.at(0));
@@ -99,8 +101,10 @@ Base* parse(string &input){
       }
       if(cast.at(0) == "Test"){
 	it++;
-	if(cast.at(0).at(0) == "-"){
-	    return new Test(cast.at(0), *it++);
+	cast.at(0) = *it;
+	if(cast.at(0).at(0) == '-'){
+	    it++;
+	    return new Test(cast.at(0), *it);
 	}
 	else{
 	    return new Test(cast.at(0));
