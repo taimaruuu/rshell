@@ -1,7 +1,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include "Test.h"
+#include "test.h"
 #include <iostream>
 #include <string>
 using namespace std;
