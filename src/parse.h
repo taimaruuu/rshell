@@ -105,7 +105,7 @@ Base* parse(string &input){
 	    return new Test(cast.at(0));
 	}
       }
-      if(cast.at(0) == "Test"){
+      if(cast.at(0) == "test"){
 	it++;
 	cast.at(0) = *it;
 	if(cast.at(0).at(0) == '-'){
