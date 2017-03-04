@@ -121,6 +121,8 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
   vector<string> tcast(1);
   bool commandOnly = true;
   bool flagPresent = false;
+  string temp = "";
+  string tpath = "";
 
 
   while (it != token.end()) {
@@ -175,6 +177,44 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
         return new Command(arglist);
       }
       // if(cast.at(0) == "[")
+      //for test
+      if(cast.at(0) == "[" || cast.at(0) == "test"){
+     	//arglist.push_back(cast.at(0));
+     	it++;
+     	cast.at(0) = *it;
+     	//look for flag
+     	if(cast.at(0).at(0) == '-'){
+     	    it++;
+     	    temp += *it;
+     	    //get whole file path if exists
+     	    it++;
+     	    while(it != token.end()) {
+     		if(*it != "]" && *it != "#" && *it != "&" && *it != "|" && *it != ";" && *it != " ") {
+     		    tpath += *it;
+     	        }
+     		else {
+     		    //return new Test(temp, tpath);
+     		    break;
+     		}
+     		    it++;
+     	    }
+     	    return new Test(temp, tpath);
+     	}
+     	else{
+     	    while(it != token.end()) {
+     		if(*it != "]" && *it != "#" && *it != "&" && *it != "|" && *it != ";" && *it != " ") {
+     		    tpath += *it;
+     	        }
+
+     		else {
+     		    //return new Test(tpath);
+     		    break;
+     		}
+     		    it++;
+     	    }
+     	    return new Test(tpath);
+     	}
+           }
       if(flagPresent == false){
 
         arglist.push_back(cast.at(0));
@@ -192,8 +232,8 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
 Base* parse(string &input){
   typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
   Base* head = 0;
-  // string temp = "-";
-  // string tpath = "";
+   string temp = "-";
+   string tpath = "";
 
   vector<string> arglist;
   vector<string> cast(1);
@@ -276,29 +316,29 @@ Base* parse(string &input){
       if(flagPresent == false){
         arglist.push_back(cast.at(0));
       }
-      // if(cast.at(0) == "test" || cast.at(0) == "["){
-      //   it++;
-      // 	cast.at(0) = *it;
-      // 	//look for flag
-      // 	if(cast.at(0).at(0) == '-'){
-  	  //     it++;
-    	//     temp += *it;
-      //     it++;
-  	  //   //get whole file path if exists
-  	  //   while(it != token.end()) {
-      // 		tpath += *it;
-      // 		it++;
-  	  //   }
-	    //   return new Test(temp, tpath);
-      // }
-      // // else{
-      // //   while(it != token.end()) {
-      // //     tpath += *it;
-      // //     it++;
-      // //   }
-      // //   return new Test(tpath);
-      // // }
-      // }
+      if(cast.at(0) == "test" || cast.at(0) == "["){
+        it++;
+      	cast.at(0) = *it;
+      	//look for flag
+      	if(cast.at(0).at(0) == '-'){
+  	      it++;
+    	    temp += *it;
+          it++;
+  	    //get whole file path if exists
+  	    while(it != token.end()) {
+      		tpath += *it;
+      		it++;
+  	    }
+	      return new Test(temp, tpath);
+      }
+      else{
+        while(it != token.end()) {
+          tpath += *it;
+          it++;
+        }
+        return new Test(tpath);
+      }
+      }
       // if(cast.at(0) == "test" || cast.at(0) == "["){
       //
       //   if (firstCommand) {
