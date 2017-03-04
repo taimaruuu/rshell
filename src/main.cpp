@@ -46,37 +46,45 @@ int main(int argc, char**argv) {
 
     string userInput;
     getline(cin, userInput);
-    preParse(userInput);
-    Base* toExec = parse(userInput);
-    //removeComment(userInput);
+    if(userInput.at(0) != '#'){
+    if (preParse(userInput)) {
+      Base* toExec = parse(userInput);
+      //removeComment(userInput);
 
-    // converts user input to cstring
-    char *cstr = new char[userInput.length() + 1];
-    strcpy(cstr, userInput.c_str());
+      // converts user input to cstring
+      char *cstr = new char[userInput.length() + 1];
+      strcpy(cstr, userInput.c_str());
 
-    if(userInput == "exit"){  //if user enters exit as first command
-      exit(0);
-      // execute the break command
-      //break;                  //break the for loop to exit rShell
+      if(userInput == "exit"){  //if user enters exit as first command
+        exit(0);
+        // execute the break command
+        //break;                  //break the for loop to exit rShell
+      }
+      if(userInput.at(0) == '#'){
+
+      }
+
+      if (userInput.size() == 0) {
+
+      }
+
+      //exec base*
+
+      toExec->exec();
+
+      //Command *userCommand = new Command(cstr);
+      //userCommand->exec(argsList);
+
+      //populateVectors(userInput, cmdsList, connectorList);
+      //cout << cmdsList.size() << endl;
+      //cleanCmds(cmdsList);
+
+      // for(int i = 0; i < cmdsList.size(); i++){
+      //   cout << cmdsList.at(i) << endl;
+      // }
     }
-
-    if (userInput.size() == 0) {
-
+      cmdsList.clear();
     }
-
-    //exec base*
-    toExec->exec();
-    //Command *userCommand = new Command(cstr);
-    //userCommand->exec(argsList);
-
-    //populateVectors(userInput, cmdsList, connectorList);
-    //cout << cmdsList.size() << endl;
-    //cleanCmds(cmdsList);
-
-    // for(int i = 0; i < cmdsList.size(); i++){
-    //   cout << cmdsList.at(i) << endl;
-    // }
-    cmdsList.clear();
 
   }
   return 0;

@@ -26,9 +26,10 @@
         //set the args at 0 (so the first one) = to this->command
         char *args[420];
         args[0] = (char*)argsList.at(0).c_str();
+
         //args[cmdLength(this->cmd) + 1] = "\0";
         vector<string> tempargs;
-        string temp = "";
+        string temp = " -";
         tempargs.push_back(temp);
         unsigned x;
         for(x = 1; x < argsList.size(); x++) {

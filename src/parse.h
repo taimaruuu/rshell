@@ -45,7 +45,7 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
       // if(cast.at(0) == "[")
 
       arglist.push_back(cast.at(0));
-      
+
       if (it != token.end()) {
         it++;
       }
@@ -66,19 +66,29 @@ Base* parse(string &input){
   vector<string> arglist;
   vector<string> cast(1);
   Base *ret = 0;
+  bool flagPresent = false;
   bool commandOnly = true;
   tokenizer token(input);
   tokenizer::iterator it = token.begin();
-  // cout << "Tokenizer" << endl;
-  // for(tokenizer::iterator beg = token.begin(); beg!=token.end();++beg){
-  //     cout << *beg << "\n";
-  // }
 
     int i = 0;
     while (it != token.end()) {
       if(it != token.end()){
         cast.at(0) = *it;
       }
+      if(cast.at(0) == "-"){
+        string tempFlag = cast.at(0);
+        it++;
+        cast.at(0) = *it;
+        string gg = cast.at(0);
+        tempFlag = tempFlag + gg;
+
+        arglist.push_back(tempFlag);
+
+        // return new Command(arglist);
+        flagPresent = true;
+      }
+
       if(cast.at(0) == "#"){
         break;
       }
@@ -96,7 +106,15 @@ Base* parse(string &input){
         commandOnly = false;
         return new Semicolon(new Command(arglist),tokeParse(token,it));
       }
-      arglist.push_back(cast.at(0));
+
+      if(cast.at(0) == "("){
+
+      }
+      if(cast.at(0) == ")"){
+
+      }
+      if(flagPresent == false)
+        arglist.push_back(cast.at(0));
       it++;
       i++;
     }
@@ -107,12 +125,28 @@ Base* parse(string &input){
     return ret;
 }
 
-void preParse(string &input){
+bool preParse(string &input){
+  int open = 0, close =0;
+
   for(unsigned i = 0; i < input.size(); i++){
+    // removes ' and "
     if(input[i] == '\"' || input[i] == '\'' ){
       input.erase(input.begin()+i);
     }
+
+    // checks parenthesis parity
+    if (input[i] == '(') {
+      open++;
+    }
+    if (input[i] == ')') {
+      close++;
+    }
   }
+  if (close != open) {
+    cout <<  "received unpaired parenthesis\n";
+    return false;
+  }
+  return true;
 }
 
 
