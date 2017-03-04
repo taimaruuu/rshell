@@ -20,6 +20,8 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
   vector<string> arglist;
   vector<string> cast(1);
   Base *ret = 0;
+  string temp = "-";
+  string tpath = "";
   bool commandOnly = true;
     int i = 0;
     while (it != token.end()) {
@@ -44,11 +46,50 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
         commandOnly = false;
         return new Semicolon(new Command(arglist),tokeParse(token,it));
       }
+      //for test
+      if(cast.at(0) == "[" || cast.at(0) == "test"){
+	//arglist.push_back(cast.at(0));
+	it++;
+	cast.at(0) = *it;
+	//look for flag
+	if(cast.at(0).at(0) == '-'){
+	    it++;
+	    temp += *it;
+	    //get whole file path if exists
+	    it++;
+	    while(it != token.end()) {
+		if(*it != "]" && *it != "#" && *it != "&" && *it != "|" && *it != ";" && *it != " ") {
+		    tpath += *it;
+	        }
+		else {
+		    //return new Test(temp, tpath);
+		    break;
+		}
+		    it++;
+	    }
+	    ret = new Test(temp, tpath);
+	}
+	else{
+	    while(it != token.end()) {
+		if(*it != "]" && *it != "#" && *it != "&" && *it != "|" && *it != ";" && *it != " ") {
+		    tpath += *it;
+	        }
+		
+		else {
+		    //return new Test(tpath);
+		    break;
+		}
+		    it++;
+	    }	
+	    ret = new Test(tpath);
+	}
+      }
+
       arglist.push_back(cast.at(0));
       if (it != token.end()) {
         it++;
       }
-      i++;
+      i++;	
 
     }
 
@@ -78,6 +119,7 @@ Base* parse(string &input){
         break;
       }
       if(cast.at(0) == "&"){
+//	cout << "test order\n";
         commandOnly = false;
         it++;
         return new And(new Command(arglist),tokeParse(token,it));
@@ -89,10 +131,11 @@ Base* parse(string &input){
       }
       if(cast.at(0) == ";"){
         commandOnly = false;
-        return new Semicolon(new Command(arglist),tokeParse(token,it));
+        ret = new Semicolon(new Command(arglist),tokeParse(token,it));
       }
-      //for test with bracket
-      if(cast.at(0) == "["){
+      //for test 
+      if(cast.at(0) == "[" || cast.at(0) == "test"){
+	//arglist.push_back(cast.at(0));
 	it++;
 	cast.at(0) = *it;
 	//look for flag
@@ -102,48 +145,33 @@ Base* parse(string &input){
 	    //get whole file path if exists
 	    it++;
 	    while(it != token.end()) {
-		if(*it != "]") {
+		if(*it != "]" && *it != "#" && *it != "&" && *it != "|" && *it != ";" && *it != " ") {
 		    tpath += *it;
 	        }
-		    it++;
-	    }
-	    return new Test(temp, tpath);
-	}
-	else{
-	    while(it != token.end()) {
-		if(*it != "]") {		
-		    tpath += *it;
+		else {
+		    return new Test(temp, tpath);
 		}
 		    it++;
-	        
-	    }	
-	    return new Test(tpath);
-	}
-      }
-      //for test
-      if(cast.at(0) == "test"){
-	it++;
-	cast.at(0) = *it;
-	//look for flag
-	if(cast.at(0).at(0) == '-'){
-	    it++;
-	    temp += *it;
-            it++;
-	    //get whole file path if exists
-	    while(it != token.end()) {
-		tpath += *it;
-		it++;
 	    }
 	    return new Test(temp, tpath);
 	}
 	else{
 	    while(it != token.end()) {
-		tpath += *it;
-		it++;
-	    }
+		if(*it != "]" && *it != "#" && *it != "&" && *it != "|" && *it != ";" && *it != " ") {
+		    tpath += *it;
+		   // it++;        
+		}
+		else {
+		    //return new Test(tpath);
+		    break;
+		}
+		    it++;
+	    }	
+		//cout << "dfsdfds\n";
 	    return new Test(tpath);
 	}
       }
+
       arglist.push_back(cast.at(0));
       it++;
       i++;
