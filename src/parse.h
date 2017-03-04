@@ -101,16 +101,20 @@ Base* parse(string &input){
 	    temp += *it;
 	    //get whole file path if exists
 	    it++;
-	    while(*it != "]" && it != token.end()) {
-		tpath += *it;
-		it++;
+	    while(it != token.end()) {
+		if(*it != "]") {
+		    tpath += *it;
+		    it++;
+		}
 	    }
 	    return new Test(temp, tpath);
 	}
 	else{
-	    while(*it != "]" && it != token.end()) {
-		tpath += *it;
-		it++;
+	    while(it != token.end()) {
+		if(*it != "]") {		
+		    tpath += *it;
+		    it++;
+		}
 	    }
 	    return new Test(tpath);
 	}
