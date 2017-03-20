@@ -7,7 +7,7 @@ class Or: public Connector {
 
         Or(Base* lhs, Base* rhs);
 
-        bool exec( );
+        bool exec(int in, int out );
 };
 
 #endif

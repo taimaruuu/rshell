@@ -18,7 +18,7 @@ Test::Test(string path) {
 }
 
 
-bool Test::exec() {
+bool Test::exec(int in, int out) {
     struct stat buf;
     int statvalue = stat(this->path.c_str(), &buf);
     //if stat value is -1, cannot be -e,-f,-d this must be false

@@ -16,8 +16,8 @@ class Command: public Base{
         Command();
 
         //exec that executes leaf/compostite node in the tree
-        bool exec( );
-        
+        bool exec(int in, int out );
+
 };
 
 

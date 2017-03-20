@@ -3,12 +3,12 @@
 Or::Or(Base* lhs, Base* rhs): Connector(lhs,rhs) {}
 
 //Executes right command only if the left command fails.
-bool Or::exec( ){
-    if(lhs->exec( )) {
+bool Or::exec(int in, int out ){
+    if(lhs->exec(in, out)) {
         return true;
     }
     else {
-        if(rhs->exec( )) {
+        if(rhs->exec(in, out)) {
             return true;
         }
         else {

@@ -10,7 +10,7 @@ class Connector: public Base{
     public:
 
         //virtual exec that executes leaf/compostite node in the tree
-        virtual bool exec( ) = 0;
+        virtual bool exec(int in, int out ) = 0;
 
 
         //constructors for connector class

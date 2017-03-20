@@ -18,7 +18,7 @@
     // }
 
     //exec that executes leaf/compostite node in the tree
-    bool Command::exec() {
+    bool Command::exec(int in, int out) {
 
         if(argsList.at(0) == "exit"){
           exit(0);

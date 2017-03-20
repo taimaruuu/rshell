@@ -14,7 +14,7 @@ class Test: public Base {
         Test(string path);
 
         //executes the test command, returns true/false
-        bool exec( );
+        bool exec(int in, int out );
 };
 
 #endif

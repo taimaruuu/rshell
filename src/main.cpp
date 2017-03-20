@@ -42,7 +42,7 @@ int main(int argc, char**argv) {
     // char command[] = "date";
     // Command *test = new Command(command);
     // cout << test->get_string() << endl;
-    // test->exec();
+    // test->exec(int in, int out);
 
     string userInput;
     getline(cin, userInput);
@@ -70,10 +70,10 @@ int main(int argc, char**argv) {
 
       //exec base*
 
-      toExec->exec();
+      //toExec->exec(in, out);
 
       //Command *userCommand = new Command(cstr);
-      //userCommand->exec(argsList);
+      //userCommand->exec(int in, int outargsList);
 
       //populateVectors(userInput, cmdsList, connectorList);
       //cout << cmdsList.size() << endl;
