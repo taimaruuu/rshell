@@ -60,17 +60,10 @@ int main(int argc, char**argv) {
         // execute the break command
         //break;                  //break the for loop to exit rShell
       }
-      if(userInput.at(0) == '#'){
-
-      }
-
-      if (userInput.size() == 0) {
-
-      }
-
+  
       //exec base*
 
-      //toExec->exec(in, out);
+      toExec->exec(0,1);
 
       //Command *userCommand = new Command(cstr);
       //userCommand->exec(int in, int outargsList);

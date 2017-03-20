@@ -113,12 +113,31 @@ Base* precedenceParse(tokenizer &token, tokenizer::iterator &it){
   }
 
 Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
+  vector<string> arglist;
+  vector<string> cast(1);
+
+  if(it != token.end()){
+    cast.at(0) = *it;
+    // cout << "CAST TOKE" << cast.at(0) << endl;
+    if(cast.at(0) == "<"){
+      cout << "i'm also going in\n";
+      it++;
+      cast.at(0) = *it;
+      arglist.push_back(cast.at(0));
+      Base* temp = new Command(arglist);
+      cout << "file1"<< cast.at(0) << endl;
+      temp->filename = cast.at(0);
+      cout << "file69"<< temp->filename << endl;
+      return temp;
+
+    }
+  }
   if(it != token.end()){
     it++;
   }
 
-  vector<string> arglist;
-  vector<string> cast(1);
+
+
   vector<string> tcast(1);
   bool commandOnly = true;
   bool flagPresent = false;
@@ -241,11 +260,16 @@ Base* parse(string &input){
   bool flagPresent = false;
   bool commandOnly = true;
   bool entersPrec = false;
+  bool inputBool = false;
   tokenizer token(input);
   tokenizer::iterator it = token.begin();
+  cout << "NIGGET" << endl;
+  for (tokenizer::iterator it1 = token.begin(); it1 != token.end(); it1++) {
+    cast.at(0) = *it1;
+    cout << cast.at(0) << endl;
+  }
 
-
-  while (it != token.end()) {
+    while (it != token.end()) {
       if(it != token.end()){
         cast.at(0) = *it;
         // cout << "CAST PARSE" << cast.at(0) << endl;
@@ -312,12 +336,16 @@ Base* parse(string &input){
         }
       }
       if(cast.at(0) == "<"){
+        cout << "< i'm going in\n";
         if (firstCommand) {
+          cout << "bitch i'm going in\n";
           head = new Command(arglist);
           firstCommand = false;
         }
         Base* temp = new Input(head, tokeParse(token,it));
+        cout << "temp: \n";
         head = temp;
+        inputBool = true;
       }
       if(flagPresent == false){
         arglist.push_back(cast.at(0));
@@ -349,7 +377,9 @@ Base* parse(string &input){
           it++;
       }
     }
-    if (commandOnly && !entersPrec) {
+
+
+    if (commandOnly && !entersPrec && !inputBool) {
 
       head = new Command(arglist);
     }

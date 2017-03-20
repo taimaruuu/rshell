@@ -8,7 +8,7 @@ class And: public Connector{
 
         And(Base* lhs, Base* rhs);
 
-        bool exec(int in, int out );
+        bool exec(int in, int out);
 };
 
 #endif
