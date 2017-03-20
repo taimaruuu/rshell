@@ -16,7 +16,7 @@ Input::Input(Base* lhs, Base* rhs): Connector(lhs,rhs) {}
 
 //redirects input from the standard in to the input given on the command line
 bool Input::exec(int in, int out) {
-    cout << "input going in: " << endl;
+    // cout << "input going in: " << endl;
     string file = rhs->filename;
 
     in = open(file.c_str(), O_RDONLY, 0);
@@ -24,8 +24,8 @@ bool Input::exec(int in, int out) {
 
     bool success = false;
     close(0);
-    if (dup2(in, STDIN_FILENO)){
-      perror("dup2 failed");
+    if (dup2(in, STDIN_FILENO) == -1){
+      perror("dup2 input failed");
       return false;
     }
     close(in);

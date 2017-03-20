@@ -1,4 +1,4 @@
-#include "Output_single.h"
+#include "Output_double.h"
 using namespace std;
 
 #include <iostream>
@@ -11,20 +11,20 @@ using namespace std;
 #include <fcntl.h>
 #include <string>
 
-Output_single::Output_single(Base* lhs, Base* rhs): Connector(lhs,rhs) {}
+Output_double::Output_double(Base* lhs, Base* rhs): Connector(lhs,rhs) {}
 
 
 //redirects input from the standard in to the input given on the command line
-bool Output_single::exec(int in, int out) {
+bool Output_double::exec(int in, int out) {
     bool success = false;
     int pid = fork();
     string file = rhs->filename;
-    FILE *test = fopen(file.c_str(), "w"); //w to empty file and recreate it
+    FILE *test = fopen(file.c_str(), "a"); //a to append to file or to make it
     out = fileno(test);
 
     if (pid == 0) {
         if(dup2(out,STDOUT_FILENO) == -1) {
-          perror("dup2 single output failed");
+          perror("dup2 double ouptput failed");
           return false;
         }
         if(lhs->exec(3, 0)){

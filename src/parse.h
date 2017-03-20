@@ -8,6 +8,7 @@
 #include "test.h"
 #include "Input.h"
 #include "Output_single.h"
+#include "Output_double.h"
 
 #include<boost/tokenizer.hpp>
 
@@ -116,6 +117,8 @@ Base* precedenceParse(tokenizer &token, tokenizer::iterator &it){
 Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
   vector<string> arglist;
   vector<string> cast(1);
+  vector<string> castNext(1);
+  string filename;
 
   if(it != token.end()){
     cast.at(0) = *it;
@@ -126,11 +129,38 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
       cast.at(0) = *it;
       arglist.push_back(cast.at(0));
       Base* temp = new Command(arglist);
-      // cout << "file1"<< cast.at(0) << endl;
-      temp->filename = cast.at(0);
+
+      for( ; it != token.end(); it++ ){
+        if(boost::next(it) == token.end()){
+            cout << "Enetred break" << endl;
+            cast.at(0) = *it;
+            filename += cast.at(0);
+            break;
+        }
+        castNext.at(0) = *boost::next(it);
+        cast.at(0) = *it;
+        cout << "cast0" << cast.at(0) << endl;
+
+        filename += cast.at(0);
+        //cout << "cast " << cast.at(0) << endl;
+        if(castNext.at(0) == ">"){
+          break;
+        }
+        if(castNext.at(0) == "<"){
+          break;
+        }
+        if(castNext.at(0) == "|"){
+          break;
+        }
+      }
+      cast.at(0) = *it;
+      cout << "cast1" << cast.at(0) << endl;
+      // cout << "Cast: " << cast.at(0) << endl;
+      cout << "file1 "<< filename << endl;
+      temp->filename = filename;
+      filename = "";
       // cout << "file69"<< temp->filename << endl;
       return temp;
-
     }
   }
   if(it != token.end()){
@@ -139,13 +169,81 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
     if(cast.at(0) == ">"){
       // cout << "i'm also going in\n";
       it++;
+      //cout << "Cast " << cast.at(0) << endl;`
       cast.at(0) = *it;
+      if (cast.at(0) == ">") {
+        // cout << "going into second > check\n";
+        it++;
+        // cout << "is this the seg fault\n";
+        cast.at(0) = *it;
+        // cout << "or this\n";
+        arglist.push_back(cast.at(0));
+        Base* temp = new Command(arglist);
+        for( ; it != token.end(); it++ ){
+          if(boost::next(it) == token.end()){
+              cout << "Enetred break" << endl;
+              cast.at(0) = *it;
+              filename += cast.at(0);
+              break;
+          }
+          castNext.at(0) = *boost::next(it);
+          cast.at(0) = *it;
+          cout << "cast0" << cast.at(0) << endl;
+
+          filename += cast.at(0);
+          //cout << "cast " << cast.at(0) << endl;
+          if(castNext.at(0) == ">"){
+            break;
+          }
+          if(castNext.at(0) == "<"){
+            break;
+          }
+          if(castNext.at(0) == "|"){
+            break;
+          }
+        }
+        // cout << "file1"<< cast.at(0) << endl;
+        cout << "file1"<< filename << endl;
+        temp->filename = filename;
+        filename = "";
+        // cout << "file69"<< temp->filename << endl;
+        return temp;
+
+      }
+
       arglist.push_back(cast.at(0));
       Base* temp = new Command(arglist);
+
+      for( ; it != token.end(); it++ ){
+        if(boost::next(it) == token.end()){
+            cout << "Enetred break" << endl;
+            cast.at(0) = *it;
+            filename += cast.at(0);
+            break;
+        }
+        castNext.at(0) = *boost::next(it);
+        cast.at(0) = *it;
+        cout << "cast0" << cast.at(0) << endl;
+
+        filename += cast.at(0);
+        //cout << "cast " << cast.at(0) << endl;
+        if(castNext.at(0) == ">"){
+          break;
+        }
+        if(castNext.at(0) == "<"){
+          break;
+        }
+        if(castNext.at(0) == "|"){
+          break;
+        }
+      }
       // cout << "file1"<< cast.at(0) << endl;
-      temp->filename = cast.at(0);
+      cout << "file1"<< filename << endl;
+      temp->filename = filename;
+      filename = "";
       // cout << "file69"<< temp->filename << endl;
       return temp;
+
 
     }
   }
@@ -266,6 +364,7 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
 
 Base* parse(string &input){
   typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
+  // boost::char_separator<char> sep("|&<>()[] ");
   Base* head = 0;
    string temp = "-";
    string tpath = "";
@@ -273,18 +372,20 @@ Base* parse(string &input){
   vector<string> arglist;
 
   vector<string> cast(1);
+  vector<string> tcast(1);
   bool firstCommand = true;
   bool flagPresent = false;
   bool commandOnly = true;
   bool entersPrec = false;
   bool inputBool = false;
   bool singleOutput = false;
+  //bool doubleOutput = false;
   tokenizer token(input);
   tokenizer::iterator it = token.begin();
-  // cout << "NIGGET" << endl;
+  cout << "NIGGET" << endl;
   for (tokenizer::iterator it1 = token.begin(); it1 != token.end(); it1++) {
     cast.at(0) = *it1;
-    //cout << cast.at(0) << endl;
+    cout << cast.at(0) << endl;
   }
 
     while (it != token.end()) {
@@ -365,22 +466,46 @@ Base* parse(string &input){
         head = temp;
         inputBool = true;
       }
-
       if(cast.at(0) == ">"){
-        //cout << "> i'm going in\n";
-        if (firstCommand) {
-          //cout << "bitch i'm going in\n";
-          head = new Command(arglist);
-          firstCommand = false;
-        }
-        Base* temp = new Output_single(head, tokeParse(token,it));
-        //cout << "temp: \n";
-        head = temp;
         inputBool = true;
+        //cout << "> i'm going in\n";
+        if (boost::next(it) != token.end()){
+          tcast.at(0) = *boost::next(it);
+        }
+
+        if (tcast.at(0) == ">") {
+          if (firstCommand) {
+            //it++;
+            //cout << "bitch i'm going in\n";
+            head = new Command(arglist);
+            firstCommand = false;
+          }
+          //it = boost::next(it);
+          Base* temp = new Output_double(head, tokeParse(token, it));
+          //cout << "temp: \n";
+          head = temp;
+          inputBool = true;
+        }
+        else{
+          if (firstCommand) {
+            //cout << "bitch i'm going in\n";
+            head = new Command(arglist);
+            firstCommand = false;
+          }
+          Base* temp = new Output_single(head, tokeParse(token,it));
+          //cout << "temp: \n";
+          head = temp;
+          inputBool = true;
+        }
+
+
+
       }
+
       if(flagPresent == false){
         arglist.push_back(cast.at(0));
       }
+
       if(cast.at(0) == "test" || cast.at(0) == "["){
         it++;
         cast.at(0) = *it;
@@ -440,11 +565,5 @@ bool preParse(string &input){
   }
   return true;
 }
-
-
-
-
-
-
 
 #endif
