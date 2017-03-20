@@ -19,7 +19,7 @@
 
     //exec that executes leaf/compostite node in the tree
     bool Command::exec(int in, int out) {
-      cout << "command exec\n";
+      // cout << "command exec\n";
         if(argsList.at(0) == "exit"){
           exit(0);
         }
@@ -32,15 +32,15 @@
         string temp = " -";
         tempargs.push_back(temp);
         unsigned x;
-        cout <<"HELLO" << endl;
+        // cout <<"HELLO" << endl;
         for(x = 1; x < argsList.size(); x++) {
           //cout << "temp: " << argsList.at(x) << endl;
           args[x] = (char*)argsList.at(x).c_str();
 
         }
-        cout <<"DICK " << args[0] << endl;
+        // cout <<"DICK " << args[0] << endl;
         args[x] = 0;
-        cout <<"BYE" << endl;
+        // cout <<"BYE" << endl;
 
 
         //return value to see if the function executed or not
@@ -52,14 +52,14 @@
             perror("fork failed");
         }
         if (pid == 0) { // pid == 0 is child process
-          if(dup2(in,1) == -1) {
-            perror("dup2 failed");
-            return false;
-          }
-          if(dup2(out,1) == -1) {
-            perror("dup2 failed");
-            return false;
-          }
+          // if(dup2(in,1) == -1) {
+          //   perror("dup2 failed");
+          //   return false;
+          // }
+          // if(dup2(out,1) == -1) {
+          //   perror("dup2 failed");
+          //   return false;
+          // }
 
           if(execvp(args[0], args) == -1) {
             ret_status = false;

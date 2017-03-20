@@ -24,13 +24,16 @@ bool Input::exec(int in, int out) {
 
     bool success = false;
     close(0);
-    dup2(in, STDIN_FILENO);
+    if (dup2(in, STDIN_FILENO)){
+      perror("dup2 failed");
+      return false;
+    }
     close(in);
 
-    if(lhs->exec(1,0)){
+    if(lhs->exec(3,0)){
       success = true;
     }
-    
+
     dup2(stdin_copy, STDIN_FILENO);
     close(stdin_copy);
 

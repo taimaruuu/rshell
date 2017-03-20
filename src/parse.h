@@ -7,6 +7,7 @@
 #include "Semicolon.h"
 #include "test.h"
 #include "Input.h"
+#include "Output_single.h"
 
 #include<boost/tokenizer.hpp>
 
@@ -120,14 +121,30 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
     cast.at(0) = *it;
     // cout << "CAST TOKE" << cast.at(0) << endl;
     if(cast.at(0) == "<"){
-      cout << "i'm also going in\n";
+      // cout << "i'm also going in\n";
       it++;
       cast.at(0) = *it;
       arglist.push_back(cast.at(0));
       Base* temp = new Command(arglist);
-      cout << "file1"<< cast.at(0) << endl;
+      // cout << "file1"<< cast.at(0) << endl;
       temp->filename = cast.at(0);
-      cout << "file69"<< temp->filename << endl;
+      // cout << "file69"<< temp->filename << endl;
+      return temp;
+
+    }
+  }
+  if(it != token.end()){
+    cast.at(0) = *it;
+    // cout << "CAST TOKE" << cast.at(0) << endl;
+    if(cast.at(0) == ">"){
+      // cout << "i'm also going in\n";
+      it++;
+      cast.at(0) = *it;
+      arglist.push_back(cast.at(0));
+      Base* temp = new Command(arglist);
+      // cout << "file1"<< cast.at(0) << endl;
+      temp->filename = cast.at(0);
+      // cout << "file69"<< temp->filename << endl;
       return temp;
 
     }
@@ -261,12 +278,13 @@ Base* parse(string &input){
   bool commandOnly = true;
   bool entersPrec = false;
   bool inputBool = false;
+  bool singleOutput = false;
   tokenizer token(input);
   tokenizer::iterator it = token.begin();
-  cout << "NIGGET" << endl;
+  // cout << "NIGGET" << endl;
   for (tokenizer::iterator it1 = token.begin(); it1 != token.end(); it1++) {
     cast.at(0) = *it1;
-    cout << cast.at(0) << endl;
+    //cout << cast.at(0) << endl;
   }
 
     while (it != token.end()) {
@@ -336,14 +354,27 @@ Base* parse(string &input){
         }
       }
       if(cast.at(0) == "<"){
-        cout << "< i'm going in\n";
+        // cout << "< i'm going in\n";
         if (firstCommand) {
-          cout << "bitch i'm going in\n";
+          // cout << "bitch i'm going in\n";
           head = new Command(arglist);
           firstCommand = false;
         }
         Base* temp = new Input(head, tokeParse(token,it));
-        cout << "temp: \n";
+        // cout << "temp: \n";
+        head = temp;
+        inputBool = true;
+      }
+
+      if(cast.at(0) == ">"){
+        //cout << "> i'm going in\n";
+        if (firstCommand) {
+          //cout << "bitch i'm going in\n";
+          head = new Command(arglist);
+          firstCommand = false;
+        }
+        Base* temp = new Output_single(head, tokeParse(token,it));
+        //cout << "temp: \n";
         head = temp;
         inputBool = true;
       }
@@ -379,7 +410,7 @@ Base* parse(string &input){
     }
 
 
-    if (commandOnly && !entersPrec && !inputBool) {
+    if (commandOnly && !entersPrec && !inputBool && !singleOutput) {
 
       head = new Command(arglist);
     }
