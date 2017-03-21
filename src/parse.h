@@ -285,7 +285,7 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
           }
         }
         string tempList;
-        for(int i = 0; i < filename.size(); i++){
+        for(unsigned i = 0; i < filename.size(); i++){
           if(filename.at(i) != ' '){
             tempList += filename.at(i);
           }
@@ -707,7 +707,7 @@ Base* parse(string &input){
           }
         }
         string tempList;
-        for(int i = 0; i < filename.size(); i++){
+        for(unsigned i = 0; i < filename.size(); i++){
           if(filename.at(i) != ' '){
             tempList += filename.at(i);
           }
@@ -749,7 +749,7 @@ Base* parse(string &input){
         }
         // cout << "FILENAME " << filename << endl;
         string tempList;
-        for(int i = 0; i < filename.size(); i++){
+        for(unsigned i = 0; i < filename.size(); i++){
           if(filename.at(i) != ' '){
             tempList += filename.at(i);
           }
