@@ -9,6 +9,7 @@
 #include "Input.h"
 #include "Output_single.h"
 #include "Output_double.h"
+#include "Pipe.h"
 
 #include<boost/tokenizer.hpp>
 
@@ -132,14 +133,14 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
 
       for( ; it != token.end(); it++ ){
         if(boost::next(it) == token.end()){
-            cout << "Enetred break" << endl;
+            //cout << "Enetred break" << endl;
             cast.at(0) = *it;
             filename += cast.at(0);
             break;
         }
         castNext.at(0) = *boost::next(it);
         cast.at(0) = *it;
-        cout << "cast0" << cast.at(0) << endl;
+        //cout << "cast0" << cast.at(0) << endl;
 
         filename += cast.at(0);
         //cout << "cast " << cast.at(0) << endl;
@@ -154,23 +155,25 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
         }
       }
       cast.at(0) = *it;
-      cout << "cast1" << cast.at(0) << endl;
+      //cout << "cast1" << cast.at(0) << endl;
       // cout << "Cast: " << cast.at(0) << endl;
-      cout << "file1 "<< filename << endl;
+      //cout << "file1 "<< filename << endl;
       temp->filename = filename;
       filename = "";
       // cout << "file69"<< temp->filename << endl;
       return temp;
     }
   }
+
   if(it != token.end()){
     cast.at(0) = *it;
     // cout << "CAST TOKE" << cast.at(0) << endl;
-    if(cast.at(0) == ">"){
+    if(cast.at(0) ==  ">"){
       // cout << "i'm also going in\n";
       it++;
       //cout << "Cast " << cast.at(0) << endl;`
       cast.at(0) = *it;
+      //>> operator
       if (cast.at(0) == ">") {
         // cout << "going into second > check\n";
         it++;
@@ -181,14 +184,14 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
         Base* temp = new Command(arglist);
         for( ; it != token.end(); it++ ){
           if(boost::next(it) == token.end()){
-              cout << "Enetred break" << endl;
+              //cout << "Enetred break" << endl;
               cast.at(0) = *it;
               filename += cast.at(0);
               break;
           }
           castNext.at(0) = *boost::next(it);
           cast.at(0) = *it;
-          cout << "cast0" << cast.at(0) << endl;
+          //cout << "cast0" << cast.at(0) << endl;
 
           filename += cast.at(0);
           //cout << "cast " << cast.at(0) << endl;
@@ -203,7 +206,7 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
           }
         }
         // cout << "file1"<< cast.at(0) << endl;
-        cout << "file1"<< filename << endl;
+        //cout << "file1"<< filename << endl;
         temp->filename = filename;
         filename = "";
         // cout << "file69"<< temp->filename << endl;
@@ -216,14 +219,14 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
 
       for( ; it != token.end(); it++ ){
         if(boost::next(it) == token.end()){
-            cout << "Enetred break" << endl;
+            //cout << "Enetred break" << endl;
             cast.at(0) = *it;
             filename += cast.at(0);
             break;
         }
         castNext.at(0) = *boost::next(it);
         cast.at(0) = *it;
-        cout << "cast0" << cast.at(0) << endl;
+        //cout << "cast0" << cast.at(0) << endl;
 
         filename += cast.at(0);
         //cout << "cast " << cast.at(0) << endl;
@@ -238,15 +241,162 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
         }
       }
       // cout << "file1"<< cast.at(0) << endl;
-      cout << "file1"<< filename << endl;
+      //cout << "file1"<< filename << endl;
       temp->filename = filename;
       filename = "";
       // cout << "file69"<< temp->filename << endl;
       return temp;
-
-
     }
   }
+  if(it != token.end()){
+    cast.at(0) = *it;
+    // cout << "CAST TOKE" << cast.at(0) << endl;
+    if(cast.at(0) == "|"){
+      // cout << "i'm also going in\n";
+      it++;
+      cast.at(0) = *it;
+      if(cast.at(0) == "tr"){
+        for( ; it != token.end(); it++ ){
+          if(boost::next(it) == token.end()){
+              //cout << "Enetred break" << endl;
+              cast.at(0) = *it;
+              // cout << "CAAUDJKFHFF _END" << cast.at(0) << endl;
+              filename += cast.at(0);
+              //filename += " ";
+              break;
+          }
+          castNext.at(0) = *boost::next(it);
+          cast.at(0) = *it;
+          //cout << "cast0" << cast.at(0) << endl;
+          // cout << "CAAUDJKFHFF" << cast.at(0) << endl;
+          filename += cast.at(0);
+          if(castNext.at(0) != "-" && cast.at(0) != "-"){
+            filename += " ";
+          }
+          //cout << "cast " << cast.at(0) << endl;
+          if(castNext.at(0) == ">"){
+            break;
+          }
+          if(castNext.at(0) == "<"){
+            break;
+          }
+          if(castNext.at(0) == "|"){
+            break;
+          }
+        }
+        string tempList;
+        for(int i = 0; i < filename.size(); i++){
+          if(filename.at(i) != ' '){
+            tempList += filename.at(i);
+          }
+          else{
+            arglist.push_back(tempList);
+            tempList = "";
+          }
+        }
+        // cout << "File NAME " << filename << endl;
+        //arglist.push_back(filename);
+        //trPresent = true;
+      }
+      else if(cast.at(0) == "tee"){
+        arglist.push_back(cast.at(0));
+        it++;
+        for( ; it != token.end(); it++ ){
+          if(boost::next(it) == token.end()){
+              //cout << "Enetred break" << endl;
+              cast.at(0) = *it;
+              filename += cast.at(0);
+              break;
+          }
+          castNext.at(0) = *boost::next(it);
+          cast.at(0) = *it;
+          //cout << "cast0" << cast.at(0) << endl;
+
+          filename += cast.at(0);
+          //cout << "cast " << cast.at(0) << endl;
+          if(castNext.at(0) == ">"){
+            break;
+          }
+          if(castNext.at(0) == "<"){
+            break;
+          }
+          if(castNext.at(0) == "|"){
+            break;
+          }
+        }
+        arglist.push_back(filename);
+      }
+      else if(cast.at(0) == "grep"){
+        arglist.push_back(cast.at(0));
+        it++;
+        for( ; it != token.end(); it++ ){
+          if(boost::next(it) == token.end()){
+              //cout << "Enetred break" << endl;
+              cast.at(0) = *it;
+              filename += cast.at(0);
+              break;
+          }
+          castNext.at(0) = *boost::next(it);
+          cast.at(0) = *it;
+          //cout << "cast0" << cast.at(0) << endl;
+
+          filename += cast.at(0);
+          //cout << "cast " << cast.at(0) << endl;
+          if(castNext.at(0) == ">"){
+            break;
+          }
+          if(castNext.at(0) == "<"){
+            break;
+          }
+          if(castNext.at(0) == "|"){
+            break;
+          }
+        }
+        arglist.push_back(filename);
+      }
+      else{
+        for( ; it != token.end(); it++ ){
+          if(boost::next(it) == token.end()){
+              //cout << "Enetred break" << endl;
+              cast.at(0) = *it;
+              filename += cast.at(0);
+              break;
+          }
+          castNext.at(0) = *boost::next(it);
+          cast.at(0) = *it;
+          //cout << "cast0" << cast.at(0) << endl;
+
+          filename += cast.at(0);
+          // filename += " ";
+          //cout << "cast " << cast.at(0) << endl;
+          if(castNext.at(0) == ">"){
+            break;
+          }
+          if(castNext.at(0) == "<"){
+            break;
+          }
+          if(castNext.at(0) == "|"){
+            break;
+          }
+        }
+        // cout << "WHAT IS THE FILENAME " << filename << endl;
+        arglist.push_back(filename);
+      }
+
+      Base* temp = new Command(arglist);
+      //cast.at(0) = *it;
+        //cout << "cast1" << cast.at(0) << endl;
+        // cout << "Cast: " << cast.at(0) << endl;
+        //cout << "file1 "<< filename << endl;
+      // temp->filename = filename;
+      // filename = "";
+      // cout << "file69"<< temp->filename << endl;
+      return temp;
+    }
+  }
+
+
+
   if(it != token.end()){
     it++;
   }
@@ -315,7 +465,8 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
           return new Command(arglist);
         }
       //for test
-      if(cast.at(0) == "[" || cast.at(0) == "test"){
+      // if(cast.at(0) == "[" || cast.at(0) == "test"){
+      if(cast.at(0) == "["){
         it++;
         cast.at(0) = *it;
         //look for flag
@@ -359,7 +510,7 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
       }
     }
 
-  return new Command(arglist);;
+  return new Command(arglist);
 }
 
 Base* parse(string &input){
@@ -373,19 +524,24 @@ Base* parse(string &input){
 
   vector<string> cast(1);
   vector<string> tcast(1);
+  vector<string> castNext(1);
+
   bool firstCommand = true;
   bool flagPresent = false;
   bool commandOnly = true;
   bool entersPrec = false;
   bool inputBool = false;
+  bool pipeBool = false;
   bool singleOutput = false;
+  bool trPresent = false;
+  bool grepPresent = false;;
+  string filename;
   //bool doubleOutput = false;
   tokenizer token(input);
   tokenizer::iterator it = token.begin();
-  cout << "NIGGET" << endl;
   for (tokenizer::iterator it1 = token.begin(); it1 != token.end(); it1++) {
     cast.at(0) = *it1;
-    cout << cast.at(0) << endl;
+    // cout << cast.at(0) << endl;
   }
 
     while (it != token.end()) {
@@ -430,14 +586,34 @@ Base* parse(string &input){
         head = temp;
       }
       if(cast.at(0) == "|"){
-        commandOnly = false;
-        it++;
-        if (firstCommand) {
-          head = new Command(arglist);
-          firstCommand = false;
+        if (boost::next(it) != token.end()){
+          tcast.at(0) = *boost::next(it);
         }
-        Base* temp = new Or(head, tokeParse(token,it));
-        head = temp;
+        if(tcast.at(0) != "|"){
+          if (firstCommand) {
+            //it++;
+            //cout << "bitch i'm going in\n";
+            head = new Command(arglist);
+            firstCommand = false;
+          }
+          //it = boost::next(it);
+          Base* temp = new Pipe(head, tokeParse(token, it));
+          //cout << "temp: \n";
+          head = temp;
+          pipeBool = true;
+
+        }
+        else{
+          commandOnly = false;
+          it++;
+
+          if (firstCommand) {
+            head = new Command(arglist);
+            firstCommand = false;
+          }
+          Base* temp = new Or(head, tokeParse(token,it));
+          head = temp;
+        }
       }
       if(cast.at(0) == ";"){
         commandOnly = false;
@@ -501,12 +677,101 @@ Base* parse(string &input){
 
 
       }
-
-      if(flagPresent == false){
+      if(cast.at(0) == "tr"){
+        for( ; it != token.end(); it++ ){
+          if(boost::next(it) == token.end()){
+              //cout << "Enetred break" << endl;
+              cast.at(0) = *it;
+              // cout << "CAAUDJKFHFF _END" << cast.at(0) << endl;
+              filename += cast.at(0);
+              //filename += " ";
+              break;
+          }
+          castNext.at(0) = *boost::next(it);
+          cast.at(0) = *it;
+          //cout << "cast0" << cast.at(0) << endl;
+          cout << "CAAUDJKFHFF" << cast.at(0) << endl;
+          filename += cast.at(0);
+          if(castNext.at(0) != "-" && cast.at(0) != "-"){
+            filename += " ";
+          }
+          //cout << "cast " << cast.at(0) << endl;
+          if(castNext.at(0) == ">"){
+            break;
+          }
+          if(castNext.at(0) == "<"){
+            break;
+          }
+          if(castNext.at(0) == "|"){
+            break;
+          }
+        }
+        string tempList;
+        for(int i = 0; i < filename.size(); i++){
+          if(filename.at(i) != ' '){
+            tempList += filename.at(i);
+          }
+          else{
+            arglist.push_back(tempList);
+            tempList = "";
+          }
+        }
+        // cout << "File NAME " << filename << endl;
+        //arglist.push_back(filename);
+        trPresent = true;
+      }
+      if(cast.at(0) == "grep"){
         arglist.push_back(cast.at(0));
+        it++;
+        for( ; it != token.end(); it++ ){
+          if(boost::next(it) == token.end()){
+              //cout << "Enetred break" << endl;
+              cast.at(0) = *it;
+              filename += cast.at(0);
+              break;
+          }
+          castNext.at(0) = *boost::next(it);
+          cast.at(0) = *it;
+          //cout << "cast0" << cast.at(0) << endl;
+
+          filename += cast.at(0);
+          filename += " ";
+          //cout << "cast " << cast.at(0) << endl;
+          if(castNext.at(0) == ">"){
+            break;
+          }
+          if(castNext.at(0) == "<"){
+            break;
+          }
+          if(castNext.at(0) == "|"){
+            break;
+          }
+        }
+        // cout << "FILENAME " << filename << endl;
+        string tempList;
+        for(int i = 0; i < filename.size(); i++){
+          if(filename.at(i) != ' '){
+            tempList += filename.at(i);
+          }
+          else{
+            arglist.push_back(tempList);
+            tempList = "";
+          }
+        }
+        arglist.push_back(tempList);
+        grepPresent = true;
       }
 
-      if(cast.at(0) == "test" || cast.at(0) == "["){
+      if(flagPresent == false){
+        if(trPresent == false){
+          if(grepPresent == false){
+          arglist.push_back(cast.at(0));
+          }
+        }
+      }
+
+      // if(cast.at(0) == "test" || cast.at(0) == "["){
+      if(cast.at(0) == "["){
         it++;
         cast.at(0) = *it;
         //look for flag
@@ -535,7 +800,7 @@ Base* parse(string &input){
     }
 
 
-    if (commandOnly && !entersPrec && !inputBool && !singleOutput) {
+    if (commandOnly && !entersPrec && !inputBool && !singleOutput && !pipeBool)  {
 
       head = new Command(arglist);
     }
@@ -546,6 +811,7 @@ bool preParse(string &input){
   int open = 0, close =0;
 
   for(unsigned i = 0; i < input.size(); i++){
+
     // removes ' and "
     if(input[i] == '\"' || input[i] == '\'' ){
       input.erase(input.begin()+i);
@@ -560,7 +826,7 @@ bool preParse(string &input){
     }
   }
   if (close != open) {
-    cout <<  "received unpaired parenthesis\n";
+    //cout <<  "received unpaired parenthesis\n";
     return false;
   }
   return true;
