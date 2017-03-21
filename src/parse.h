@@ -404,7 +404,7 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
 
 
   vector<string> tcast(1);
-  bool commandOnly = true;
+  // bool commandOnly = true;
   bool flagPresent = false;
   string temp = "";
   string tpath = "";
@@ -442,12 +442,12 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
         tcast.at(0) = *boost::next(it);
       }
       if(tcast.at(0) == "&"){
-        commandOnly = false;
+        // commandOnly = false;
         arglist.push_back(cast.at(0));
         return new Command(arglist);
       }
       if(tcast.at(0) == "|"){
-        commandOnly = false;
+        // commandOnly = false;
         arglist.push_back(cast.at(0));
 
         return new Command(arglist);
@@ -455,7 +455,7 @@ Base* tokeParse(tokenizer &token, tokenizer::iterator &it){
       }
       if(tcast.at(0) == ";"){
 
-        commandOnly = false;
+        // commandOnly = false;
         arglist.push_back(cast.at(0));
         //it;
         return new Command(arglist);
